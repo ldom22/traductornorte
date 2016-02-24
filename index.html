@@ -1,0 +1,94 @@
+<html>
+    
+    <head>
+        <title>Traductor del norte</title>
+        <meta name="viewport" content="width=device-width; initial-scale=1.0">
+    </head>
+    
+    <body>
+        <br><br><br>
+        <center>
+            <input type="image" src="mic.png" id="logo" onclick="start();">
+        </center>
+        <center id="text">
+            <h2>Traductor de espa&ntilde;ol a norte&ntilde;o</h2>
+            <h3>Toca y habla para traducir</h3>
+        </center>
+        <br>
+        <center>
+        	<button id="b1" style="display:none;" onclick="sharetext();">Compartir en <br>Whatsapp</button>
+        	<button id="b2" style="display:none;" onclick="sharelink();">Comparte esta <br>pagina</button>
+        	<button id="b3" style="display:none;" onclick="location.reload();">Traducir <br>otra frase</button>
+        </center>
+    </body>
+    
+    <script>
+    	var recognition = new webkitSpeechRecognition();
+    	var final_transcript = "";
+        function start(){
+            document.getElementById("logo").src = "loader.gif";
+            document.getElementById("text").innerHTML = "<h2>escuchando</h2>";
+            recognition.lang = "es-MX";
+            recognition.continuous = true;
+            recognition.interimResults = true;
+            recognition.pfilter = false;
+            document.getElementById("text").innerHTML = "escuchando ...";
+            
+            recognition.onresult = function(event) {
+	            
+            	var interim_transcript = "";
+                for (var i = event.resultIndex; i < event.results.length; ++i) {
+	      			if (event.results[i].isFinal) {
+	        			final_transcript += event.results[i][0].transcript;
+	        			document.getElementById("logo").style="display:none;";
+	        			recognition.stop();
+	        			dotranslate();
+	      			} else {
+	        			interim_transcript += event.results[i][0].transcript;
+	        			document.getElementById("text").innerHTML = "<h3>"+interim_transcript+"</h3>";
+	      			}
+    			}
+    			
+            }
+            recognition.start();
+        }
+        
+        var final = "";
+        function dotranslate(){
+        	palabras = [
+        		"pinche",
+        		"puta",
+        		"verga",
+        		"pito",
+        		"madre",
+        		"mierda",
+        		"cabron",
+        		"culo"
+        	];
+        	
+        	var pal = final_transcript.split(" ");
+        	
+        	var num = 0;
+        	for(var i=0; i<pal.length; i++){
+        		final += pal[i];
+        		final += " " + palabras[num] + " ";
+        		num++;
+        		num = num%palabras.length;
+        	}
+        	
+        	document.getElementById("text").innerHTML = "<h3>"+final+"</h3>";
+        	document.getElementById("b1").style.display = "";
+        	document.getElementById("b2").style.display = "";
+        	document.getElementById("b3").style.display = "";
+        }
+        
+        function sharetext(){
+        	window.location.href = "whatsapp://send?text="+final;
+        }
+        
+        function sharelink(){
+        	window.location.href = "whatsapp://send?text="+location.href;
+        }
+    </script>
+
+</html>
