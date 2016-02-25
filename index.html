@@ -24,6 +24,22 @@
     
     <script>
         
+        //for checking if browser is PC or mobile
+        function detectmob() {
+            if( navigator.userAgent.match(/Android/i)
+               || navigator.userAgent.match(/webOS/i)
+               || navigator.userAgent.match(/iPhone/i)
+               || navigator.userAgent.match(/iPad/i)
+               || navigator.userAgent.match(/iPod/i)
+               || navigator.userAgent.match(/BlackBerry/i)
+               || navigator.userAgent.match(/Windows Phone/i)
+               ){
+                return true;
+            } else {
+                return false;
+            }
+        }
+        
         //browser must be chrome
         var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
         if(!is_chrome){
@@ -78,9 +94,13 @@
         	}
         	
         	document.getElementById("text").innerHTML = "<h3>"+final+"</h3>";
-        	document.getElementById("b1").style.display = "";
-        	document.getElementById("b2").style.display = "";
-        	document.getElementById("b3").style.display = "";
+        	
+            //only show whatsapp share buttons in mobile
+            if(detectmob()){
+                document.getElementById("b1").style.display = "";
+                document.getElementById("b2").style.display = "";
+            }
+            document.getElementById("b3").style.display = "";
             
             var msg = new SpeechSynthesisUtterance();
             msg.lang = "es-MX";
