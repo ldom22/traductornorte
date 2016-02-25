@@ -35,20 +35,12 @@
             document.getElementById("text").innerHTML = "escuchando ...";
             
             recognition.onresult = function(event) {
-	            
-            	var interim_transcript = "";
-                for (var i = event.resultIndex; i < event.results.length; ++i) {
-	      			if (event.results[i].isFinal) {
-	        			final_transcript += event.results[i][0].transcript;
-	        			document.getElementById("logo").style="display:none;";
-	        			recognition.stop();
-	        			dotranslate();
-	      			} else {
-	        			interim_transcript += event.results[i][0].transcript;
-	        			document.getElementById("text").innerHTML = "<h3>"+interim_transcript+"</h3>";
-	      			}
-    			}
-    			
+                if (event.results[0].isFinal) {
+                    final_transcript += event.results[0][0].transcript;
+                    document.getElementById("logo").style.display="none";
+                    recognition.stop();
+                    dotranslate();
+                }
             }
             recognition.start();
         }
