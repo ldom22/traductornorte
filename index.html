@@ -23,9 +23,18 @@
     </body>
     
     <script>
+        
+        //browser must be chrome
+        var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+        if(!is_chrome){
+            document.getElementById("text").innerHTML = "<h2>Traductor de espa&ntilde;ol a norte&ntilde;o</h2>";
+            document.getElementById("text").innerHTML += "<h3>Lo sentimos, esta pagina solo funciona en Chrome</h3>";
+        }
+        
     	var recognition = new webkitSpeechRecognition();
     	var final_transcript = "";
         function start(){
+            if(!is_chrome){return;}
             document.getElementById("logo").src = "loader.gif";
             document.getElementById("text").innerHTML = "<h2>escuchando</h2>";
             recognition.lang = "es-MX";
