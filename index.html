@@ -80,6 +80,11 @@
         	document.getElementById("b1").style.display = "";
         	document.getElementById("b2").style.display = "";
         	document.getElementById("b3").style.display = "";
+            
+            var msg = new SpeechSynthesisUtterance();
+            msg.lang = "es-MX";
+            mst.text = final;
+            speechSynthesis.speak(msg);
         }
         
         function sharetext(){
